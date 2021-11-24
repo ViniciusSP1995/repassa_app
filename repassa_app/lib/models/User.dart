@@ -1,12 +1,32 @@
 import 'package:repassa_app/models/Postagem.dart';
 
 class User {
-  User({this.id, this.nome, this.email, this.senha, this.foto, required this.postagem});
+  User({this.id, this.nome, this.email, this.senha, this.foto , this.postagem});
 
   num? id;
   String? nome;
   String? email;
   String? senha;
   String? foto;
-  List<Postagem> postagem;
+  List<Postagem>? postagem;
+
+  factory User.fromMap(Map userMap) {
+    return User(
+      nome: userMap['nome'],
+      email: userMap['email'],
+      senha: userMap['senha'],
+      foto: userMap['foto'],
+      
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'nome': nome,
+      'email': email,
+      'senha': senha,
+      'foto': foto,
+    };
+  }
+
 }

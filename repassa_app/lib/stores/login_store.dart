@@ -1,4 +1,10 @@
+import 'dart:convert';
+
 import 'package:mobx/mobx.dart';
+import 'package:repassa_app/helpers/extensoes.dart';
+import 'package:repassa_app/models/UserLogin.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 part 'login_store.g.dart';
 
@@ -9,27 +15,27 @@ abstract class _LoginStore with Store {
   String? email;
 
   @action
-  void setEmail(String value) => email = value;
+  void setEmail(String valor) => email = valor;
 
   @computed
-  bool get emailValid => email != null;
-  String? get emailError =>
-      email == null || emailValid ? null : 'E-mail inválido';
+  bool get emailValido => email != null && email!.isEmailValid();
+  String? get emailErro =>
+      email == null || emailValido ? null : 'E-mail inválido';
 
   @observable
-  String? password;
+  String? senha;
 
   @action
-  void setPassword(String value) => password = value;
+  void setSenha(String value) => senha = value;
 
   @computed
-  bool get passwordValid => password != null && password!.length >= 4;
-  String? get passwordError =>
-      password == null || passwordValid ? null : 'Senha inválida';
+  bool get senhaValida => senha != null && senha!.length >= 4;
+  String? get senhaErro =>
+      senha == null || senhaValida ? null : 'Senha inválida';
 
   @computed
-  Function? get loginPressed =>
-      emailValid && passwordValid && !loading ? _login : null;
+  Function? get loginPressionado =>
+      emailValido && senhaValida && !loading ? _login : null;
 
   @observable
   bool loading = false;
@@ -37,7 +43,41 @@ abstract class _LoginStore with Store {
   @observable
   String? error;
 
+  @observable
+  bool? loginConcluido;
+
   @action
   Future<void> _login() async {
+    loading = true;
+
+    loginConcluido = true;
+
+    final userLogin = UserLogin(
+      email: email,
+      senha: senha,
+    );
+
+    http.Response response = await http.post(
+        Uri.parse('http://192.168.42.196:8080/usuario/logar'),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          },
+        body: json.encode(userLogin));
+
+    print(response.body);
+
+   /* loading = false;*/
+  }
+
+  @action
+  Future<bool?> verificarToken() async {
+    SharedPreferences sharedPreference = await SharedPreferences.getInstance();
+
+    if (sharedPreference.getString('token') != null) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

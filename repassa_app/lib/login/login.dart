@@ -1,10 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 import 'package:repassa_app/cadastro/cadastro.dart';
 import 'package:repassa_app/componentes/drawer_customizado/drawer_customizado.dart';
 import 'package:repassa_app/componentes/menu.dart';
 import 'package:repassa_app/componentes/rodape.dart';
 import 'package:repassa_app/home/home.dart';
+import 'package:repassa_app/inicio/inicio.dart';
+import 'package:repassa_app/stores/login_store.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -12,6 +16,18 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final LoginStore loginStore = LoginStore();
+
+  @override
+  void initState() {
+    super.initState();
+
+    when((_) => loginStore.loginConcluido as bool, () {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => Inicio()));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,8 +49,7 @@ class _LoginState extends State<Login> {
                         child: Column(
                           children: [
                             Divider(height: 50, color: Colors.grey),
-                            Row(
-                              children: [
+                            Row(children: [
                               Padding(
                                 padding: EdgeInsets.only(bottom: 5),
                                 child: Text('Email',
@@ -43,17 +58,22 @@ class _LoginState extends State<Login> {
                                     )),
                               )
                             ]),
-                            SizedBox(
-                              height: 35,
-                              child: TextField(
+                            Observer(builder: (_) {
+                              return SizedBox(
+                                child: TextField(
+                                  enabled: !loginStore.loading,
                                   decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide:
-                                      BorderSide(color: Color(0XFF61297c)),
+                                    errorText: loginStore.emailErro,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide:
+                                          BorderSide(color: Color(0XFF61297c)),
+                                    ),
+                                  ),
+                                  onChanged: loginStore.setEmail,
                                 ),
-                              )),
-                            ),
+                              );
+                            }),
                             SizedBox(height: 10),
                             Row(children: [
                               Padding(
@@ -64,25 +84,33 @@ class _LoginState extends State<Login> {
                                     )),
                               )
                             ]),
-                            SizedBox(
-                              height: 35,
-                              child: TextField(
+                            Observer(builder: (_) {
+                              return SizedBox(
+                                child: TextField(
+                                  enabled: !loginStore.loading,
                                   decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide:
-                                      BorderSide(color: Color(0XFF61297c)),
+                                    errorText: loginStore.senhaErro,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide:
+                                          BorderSide(color: Color(0XFF61297c)),
+                                    ),
+                                  ),
+                                  onChanged: loginStore.setSenha,
                                 ),
-                              )),
-                            ),
+                              );
+                            }),
                             Divider(),
-                            SizedBox(
-                                width: 100,
-                                child: ElevatedButton(
-                                    child: Text('Entrar'),
-                                    onPressed: () {},
-                                    style: ElevatedButton.styleFrom(
-                                        primary: Color(0XFF61297c)))),
+                            Observer(builder: (_) {
+                              return SizedBox(
+                                  width: 100,
+                                  child: ElevatedButton(
+                                      child: Text('Entrar'),
+                                      onPressed: loginStore.loginPressionado
+                                          as VoidCallback,
+                                      style: ElevatedButton.styleFrom(
+                                          primary: Color(0XFF61297c))));
+                            }),
                             Divider(height: 50, color: Colors.grey),
                             Text.rich(
                               TextSpan(

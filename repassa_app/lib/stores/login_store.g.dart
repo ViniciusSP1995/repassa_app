@@ -9,27 +9,27 @@ part of 'login_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$LoginStore on _LoginStore, Store {
-  Computed<bool>? _$emailValidComputed;
+  Computed<bool>? _$emailValidoComputed;
 
   @override
-  bool get emailValid =>
-      (_$emailValidComputed ??= Computed<bool>(() => super.emailValid,
-              name: '_LoginStore.emailValid'))
+  bool get emailValido =>
+      (_$emailValidoComputed ??= Computed<bool>(() => super.emailValido,
+              name: '_LoginStore.emailValido'))
           .value;
-  Computed<bool>? _$passwordValidComputed;
+  Computed<bool>? _$senhaValidaComputed;
 
   @override
-  bool get passwordValid =>
-      (_$passwordValidComputed ??= Computed<bool>(() => super.passwordValid,
-              name: '_LoginStore.passwordValid'))
+  bool get senhaValida =>
+      (_$senhaValidaComputed ??= Computed<bool>(() => super.senhaValida,
+              name: '_LoginStore.senhaValida'))
           .value;
-  Computed<Function?>? _$loginPressedComputed;
+  Computed<Function?>? _$loginPressionadoComputed;
 
   @override
-  Function? get loginPressed =>
-      (_$loginPressedComputed ??= Computed<Function?>(() => super.loginPressed,
-              name: '_LoginStore.loginPressed'))
-          .value;
+  Function? get loginPressionado => (_$loginPressionadoComputed ??=
+          Computed<Function?>(() => super.loginPressionado,
+              name: '_LoginStore.loginPressionado'))
+      .value;
 
   final _$emailAtom = Atom(name: '_LoginStore.email');
 
@@ -46,18 +46,18 @@ mixin _$LoginStore on _LoginStore, Store {
     });
   }
 
-  final _$passwordAtom = Atom(name: '_LoginStore.password');
+  final _$senhaAtom = Atom(name: '_LoginStore.senha');
 
   @override
-  String? get password {
-    _$passwordAtom.reportRead();
-    return super.password;
+  String? get senha {
+    _$senhaAtom.reportRead();
+    return super.senha;
   }
 
   @override
-  set password(String? value) {
-    _$passwordAtom.reportWrite(value, super.password, () {
-      super.password = value;
+  set senha(String? value) {
+    _$senhaAtom.reportWrite(value, super.senha, () {
+      super.senha = value;
     });
   }
 
@@ -91,6 +91,21 @@ mixin _$LoginStore on _LoginStore, Store {
     });
   }
 
+  final _$loginConcluidoAtom = Atom(name: '_LoginStore.loginConcluido');
+
+  @override
+  bool? get loginConcluido {
+    _$loginConcluidoAtom.reportRead();
+    return super.loginConcluido;
+  }
+
+  @override
+  set loginConcluido(bool? value) {
+    _$loginConcluidoAtom.reportWrite(value, super.loginConcluido, () {
+      super.loginConcluido = value;
+    });
+  }
+
   final _$_loginAsyncAction = AsyncAction('_LoginStore._login');
 
   @override
@@ -98,25 +113,32 @@ mixin _$LoginStore on _LoginStore, Store {
     return _$_loginAsyncAction.run(() => super._login());
   }
 
+  final _$verificarTokenAsyncAction = AsyncAction('_LoginStore.verificarToken');
+
+  @override
+  Future<bool?> verificarToken() {
+    return _$verificarTokenAsyncAction.run(() => super.verificarToken());
+  }
+
   final _$_LoginStoreActionController = ActionController(name: '_LoginStore');
 
   @override
-  void setEmail(String value) {
+  void setEmail(String valor) {
     final _$actionInfo =
         _$_LoginStoreActionController.startAction(name: '_LoginStore.setEmail');
     try {
-      return super.setEmail(value);
+      return super.setEmail(valor);
     } finally {
       _$_LoginStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void setPassword(String value) {
-    final _$actionInfo = _$_LoginStoreActionController.startAction(
-        name: '_LoginStore.setPassword');
+  void setSenha(String value) {
+    final _$actionInfo =
+        _$_LoginStoreActionController.startAction(name: '_LoginStore.setSenha');
     try {
-      return super.setPassword(value);
+      return super.setSenha(value);
     } finally {
       _$_LoginStoreActionController.endAction(_$actionInfo);
     }
@@ -126,12 +148,13 @@ mixin _$LoginStore on _LoginStore, Store {
   String toString() {
     return '''
 email: ${email},
-password: ${password},
+senha: ${senha},
 loading: ${loading},
 error: ${error},
-emailValid: ${emailValid},
-passwordValid: ${passwordValid},
-loginPressed: ${loginPressed}
+loginConcluido: ${loginConcluido},
+emailValido: ${emailValido},
+senhaValida: ${senhaValida},
+loginPressionado: ${loginPressionado}
     ''';
   }
 }

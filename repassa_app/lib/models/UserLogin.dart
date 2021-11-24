@@ -8,4 +8,24 @@ class UserLogin {
   String? senha;
   String? token;
   String? foto;
+
+
+  factory UserLogin.fromMap(Map userLoginMap) {
+    return UserLogin(
+      nome: userLoginMap['nome'],
+      email: userLoginMap['email'],
+      senha: userLoginMap['senha'],
+      foto: userLoginMap['foto'],
+      
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'nome': nome,
+      'email': email,
+      'senha': senha,
+      'foto': foto,
+    };
+  }
 }

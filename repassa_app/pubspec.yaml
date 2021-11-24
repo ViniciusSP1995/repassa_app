@@ -37,6 +37,10 @@ dependencies:
   carousel_pro: ^1.0.0
   mobx: ^2.0.5
   flutter_mobx: ^2.0.2
+  http: ^0.13.4
+  get_it: ^7.2.0
+  shared_preferences: ^2.0.8
+  modal_bottom_sheet: ^2.0.0
 
 dev_dependencies:
   flutter_test:
