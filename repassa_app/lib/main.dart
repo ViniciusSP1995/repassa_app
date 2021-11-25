@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:repassa_app/home/home.dart';
-import 'package:repassa_app/inicio/inicio.dart';
-import 'package:repassa_app/login/login.dart';
-import 'package:repassa_app/models/UserLogin.dart';
-import 'package:repassa_app/sobre/sobre.dart';
-import 'package:repassa_app/tema/tema_create.dart';
 
-import 'cadastro/cadastro.dart';
 
-void main() {
+
+void main() async {
+  await dotenv.load(fileName: '.env');
   WidgetsFlutterBinding.ensureInitialized;
-  setupLocators();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,8 +25,4 @@ class MyApp extends StatelessWidget {
       home: Home(),
     );
   }
-}
-
-void setupLocators() {
-  GetIt.I.registerSingleton(UserLogin());
 }

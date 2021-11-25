@@ -1,5 +1,6 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:repassa_app/cadastro/cadastro.dart';
 import 'package:repassa_app/componentes/drawer_customizado/drawer_customizado.dart';
 import 'package:repassa_app/componentes/menu.dart';

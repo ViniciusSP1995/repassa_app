@@ -15,6 +15,7 @@ class UserLogin {
       nome: userLoginMap['nome'],
       email: userLoginMap['email'],
       senha: userLoginMap['senha'],
+      token: userLoginMap['token'],
       foto: userLoginMap['foto'],
       
     );
@@ -25,6 +26,7 @@ class UserLogin {
       'nome': nome,
       'email': email,
       'senha': senha,
+      'token': token,
       'foto': foto,
     };
   }
