@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:repassa_app/stores/tema_store.dart';
 import 'package:repassa_app/tema/tema_create.dart';
 
 class ModalPostagem extends StatefulWidget {
@@ -7,6 +8,9 @@ class ModalPostagem extends StatefulWidget {
 }
 
 class _ModalPostagemState extends State<ModalPostagem> {
+
+  TemaStore temaStore = TemaStore();
+  
   var items = [
     "Food",
     "Transport",
@@ -27,7 +31,8 @@ class _ModalPostagemState extends State<ModalPostagem> {
         child: Padding(
             padding: EdgeInsets.all(50),
             child: Form(
-                child: Column(children: [
+                child: Column(
+              children: [
               Text(
                 "Nova Postagem",
                 style: TextStyle(

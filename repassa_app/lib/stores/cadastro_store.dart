@@ -127,7 +127,7 @@ abstract class _CadastroStore with Store {
     );
 
     http.Response response = await http.post(
-      Uri.parse('http://192.168.42.168:8080/usuario/cadastrar'),
+      Uri.parse('http://192.168.42.6:8080/usuario/cadastrar'),
       headers: {"Content-Type": "application/json"},
       body: json.encode(user),
     );

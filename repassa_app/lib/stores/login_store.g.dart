@@ -113,13 +113,6 @@ mixin _$LoginStore on _LoginStore, Store {
     return _$_loginAsyncAction.run(() => super._login());
   }
 
-  final _$verificarTokenAsyncAction = AsyncAction('_LoginStore.verificarToken');
-
-  @override
-  Future<bool?> verificarToken() {
-    return _$verificarTokenAsyncAction.run(() => super.verificarToken());
-  }
-
   final _$_LoginStoreActionController = ActionController(name: '_LoginStore');
 
   @override
