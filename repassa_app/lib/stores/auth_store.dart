@@ -1,22 +1,16 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mobx/mobx.dart';
-import 'package:repassa_app/cadastro/cadastro.dart';
-import 'package:repassa_app/login/login.dart';
 import 'package:repassa_app/models/User.dart';
-import 'package:repassa_app/helpers/extensoes.dart';
-import 'package:http/http.dart' as http;
+import 'package:repassa_app/models/UserLogin.dart';
+import 'package:repassa_app/services/AuthService.dart';
 
-part 'cadastro_store.g.dart';
+part 'auth_store.g.dart';
 
-class CadastroStore = _CadastroStore with _$CadastroStore;
+class AuthStore = _AuthStore with _$AuthStore;
 
-abstract class _CadastroStore with Store {
-  /*AuthService authService = AuthService();*/
+abstract class _AuthStore with Store {
+  @observable
+  User? user;
 
   @observable
   String? nome;
@@ -44,7 +38,7 @@ abstract class _CadastroStore with Store {
   void setEmail(String valor) => email = valor;
 
   @computed
-  bool get emailValido => email != null && email!.isEmailValid();
+  bool get emailValido => email != null;
 
   String? get emailErro {
     if (email == null || emailValido) {
@@ -58,6 +52,9 @@ abstract class _CadastroStore with Store {
 
   @observable
   String? foto;
+
+  @action
+  void setFoto(String valor) => foto = valor;
 
   @observable
   String? senha;
@@ -100,9 +97,17 @@ abstract class _CadastroStore with Store {
   bool get formularioValido =>
       nomeValido && emailValido && senhaValida && confirmarSenhaValido;
 
-  @computed
+  /*@computed
   Function? get cadastrarPressionado =>
-      (formularioValido && !loading) ? _cadastrar : null;
+      (formularioValido && !loading) ? _cadastrar : () {};*/
+
+  @computed
+  Function? get loginPressionado =>
+      emailValido && senhaValida && !loading ? _login : () {};
+
+  /*@computed
+  Function? get atualizarPressionado =>
+      formularioValido && !loading ? _atualizar : () {};*/
 
   @observable
   bool loading = false;
@@ -113,8 +118,19 @@ abstract class _CadastroStore with Store {
   @observable
   bool? cadastroSalvo;
 
+  @observable
+  bool loginConcluido = false;
+
   @action
-  Future<void> _cadastrar() async {
+  Future GetByIdUser(int id) async {
+    user = await AuthService().getByIdUser(id);
+
+    print('++++++++++++++++${user!.toJson()}++++++++++++++++++');
+    return user;
+  }
+
+  @action
+  Future<void> cadastrar() async {
     loading = true;
 
     cadastroSalvo = true;
@@ -126,15 +142,47 @@ abstract class _CadastroStore with Store {
       senha: senha,
     );
 
-    http.Response response = await http.post(
-      Uri.parse('http://192.168.42.6:8080/usuario/cadastrar'),
-      headers: {"Content-Type": "application/json"},
-      body: json.encode(user),
-    );
-
-    print(response.body);
+    await AuthService().cadastrar(user);
 
     loading = false;
+  }
 
+  @action
+  Future<void> _login() async {
+    loading = true;
+
+    final userLogin = UserLogin(
+      email: email,
+      senha: senha,
+    );
+
+    await AuthService().entrar(userLogin);
+
+    if (dotenv.env['id']!.isEmpty) {
+      loginConcluido = false;
+      erro = 'Usuário ou senha incorreta. Tente novamente';
+    } else {
+      loginConcluido = true;
+    }
+  }
+
+  @action
+  Future<void> atualizar() async {
+    final user = User(
+      id: this.user!.id,
+      nome: nome,
+      email: email,
+      foto: foto,
+      senha: senha,
+    );
+
+    await AuthService().cadastrar(user);
+
+    dotenv.env['token'] = '';
+    dotenv.env['nome'] = '';
+    dotenv.env['id'] = '';
+    dotenv.env['foto'] = '';
+
+    print('TESTE');
   }
 }

@@ -1,27 +1,27 @@
 import 'package:repassa_app/models/Postagem.dart';
 
 class Tema {
-  Tema({this.id, this.descricao, this.postagem});
+  Tema({this.id, this.descricao, /*this.postagem*/});
 
   num? id;
   String? descricao;
-  List<Postagem>? postagem;
+  /*List<Postagem>? postagem;*/
 
   factory Tema.fromMap(Map<String, dynamic> temaMap) {
-    return Tema(id: temaMap['id'], descricao: temaMap['descricao']);
+    return Tema(
+        id: temaMap['id'],
+        descricao: temaMap['descricao'],
+       /* postagem: (temaMap['postagem'] as List)
+            .map((e) => Postagem.fromMap(e))
+            .toList()*/
+      );
   }
-
-  Tema.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    descricao = json['descricao'];
-  }
-
-
 
   Map<String, dynamic> toJson() {
     return {
-      'descricao': descricao
+      'id': id,
+      'descricao': descricao,
+     /* 'postagem': List<dynamic>.from(postagem!.map((e) => e.toJson()))*/
     };
   }
-  
 }

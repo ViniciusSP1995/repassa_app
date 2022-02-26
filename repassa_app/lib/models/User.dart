@@ -12,6 +12,7 @@ class User {
 
   factory User.fromMap(Map userMap) {
     return User(
+      id: userMap['id'],
       nome: userMap['nome'],
       email: userMap['email'],
       senha: userMap['senha'],
@@ -22,6 +23,7 @@ class User {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'nome': nome,
       'email': email,
       'senha': senha,

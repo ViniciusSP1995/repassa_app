@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mobx/mobx.dart';
-
-import 'package:http/http.dart' as http;
 import 'package:repassa_app/models/Tema.dart';
+import 'package:repassa_app/services/TemaService.dart';
 
 part 'tema_store.g.dart';
 
@@ -12,12 +9,13 @@ class TemaStore = _TemaStore with _$TemaStore;
 
 abstract class _TemaStore with Store {
   @observable
-  var temas = <Tema>[];
-  var tema = Tema();
+  Tema? tema;
+
+  @observable
+  ObservableList<Tema> temas = ObservableList<Tema>();
 
   @computed
-  List<Tema> get allTemas => temas;
-  
+  List<Tema> get allTemas => temas.toList();
 
   @observable
   String? descricao;
@@ -25,42 +23,18 @@ abstract class _TemaStore with Store {
   @action
   void setDescricao(String valor) => descricao = valor;
 
+  @action
   Future GetAllTemas() async {
-    http.Response response = await http.get(
-        Uri.parse(
-          'http://192.168.42.6:8080/tema',
-        ),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': '${dotenv.env['token']}'
-        });
-    ;
-    print(response.body);
-
-    final List<dynamic> responseMap = jsonDecode(response.body);
-
-    temas = responseMap.map<Tema>((resp) => Tema.fromMap(resp)).toList();
+    temas = ObservableList<Tema>.of(await TemaService().getAllTema());
 
     return temas;
   }
 
-  Future GetByIdTema(num id) async {
-    http.Response response = await http.get(
-        Uri.parse(
-          'http://192.168.42.6:8080/tema/${id}',
-        ),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': '${dotenv.env['token']}'
-        });
+  @action
+  Future GetByIdTema(int id) async {
+    tema = await TemaService().getByIdTema(id);
 
-    final List<dynamic> responseMap = jsonDecode(response.body);
-
-    temas = responseMap.map<Tema>((resp) => Tema.fromMap(resp)).toList();
-
-    return temas;
+    return tema;
   }
 
   Future<void> publicar() async {
@@ -70,15 +44,23 @@ abstract class _TemaStore with Store {
 
     print(dotenv.env['token']);
 
-    http.Response response =
-        await http.post(Uri.parse('http://192.168.42.6:8080/tema'),
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              'Authorization': '${dotenv.env['token']}'
-            },
-            body: json.encode(tema));
+    await TemaService().postTema(tema);
 
-    print(response.body);
+    await GetAllTemas();
+  }
+
+  Future<void> atualizar() async {
+    final tema = Tema(
+        id: this.tema!.id, descricao: descricao, /*postagem: this.tema!.postagem*/);
+
+    await TemaService().putTema(tema);
+
+    await GetAllTemas();
+  }
+
+  Future<void> deleteTema(int id) async {
+    await TemaService().deleteTema(id);
+
+    await GetAllTemas();
   }
 }

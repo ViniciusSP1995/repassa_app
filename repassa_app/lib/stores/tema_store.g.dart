@@ -17,16 +17,31 @@ mixin _$TemaStore on _TemaStore, Store {
               name: '_TemaStore.allTemas'))
           .value;
 
+  final _$temaAtom = Atom(name: '_TemaStore.tema');
+
+  @override
+  Tema? get tema {
+    _$temaAtom.reportRead();
+    return super.tema;
+  }
+
+  @override
+  set tema(Tema? value) {
+    _$temaAtom.reportWrite(value, super.tema, () {
+      super.tema = value;
+    });
+  }
+
   final _$temasAtom = Atom(name: '_TemaStore.temas');
 
   @override
-  List<Tema> get temas {
+  ObservableList<Tema> get temas {
     _$temasAtom.reportRead();
     return super.temas;
   }
 
   @override
-  set temas(List<Tema> value) {
+  set temas(ObservableList<Tema> value) {
     _$temasAtom.reportWrite(value, super.temas, () {
       super.temas = value;
     });
@@ -47,6 +62,20 @@ mixin _$TemaStore on _TemaStore, Store {
     });
   }
 
+  final _$GetAllTemasAsyncAction = AsyncAction('_TemaStore.GetAllTemas');
+
+  @override
+  Future<dynamic> GetAllTemas() {
+    return _$GetAllTemasAsyncAction.run(() => super.GetAllTemas());
+  }
+
+  final _$GetByIdTemaAsyncAction = AsyncAction('_TemaStore.GetByIdTema');
+
+  @override
+  Future<dynamic> GetByIdTema(int id) {
+    return _$GetByIdTemaAsyncAction.run(() => super.GetByIdTema(id));
+  }
+
   final _$_TemaStoreActionController = ActionController(name: '_TemaStore');
 
   @override
@@ -63,6 +92,7 @@ mixin _$TemaStore on _TemaStore, Store {
   @override
   String toString() {
     return '''
+tema: ${tema},
 temas: ${temas},
 descricao: ${descricao},
 allTemas: ${allTemas}

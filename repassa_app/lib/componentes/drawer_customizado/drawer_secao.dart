@@ -16,7 +16,7 @@ class DrawerSecao extends StatelessWidget {
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context) => Home()));
           },
-          destacado: false),
+          ),
       DrawerOpcoes(
           titulo: 'Sobre',
           icone: Icons.people,
@@ -24,7 +24,7 @@ class DrawerSecao extends StatelessWidget {
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context) => Sobre()));
           },
-          destacado: false),
+        ),
       DrawerOpcoes(
           titulo: 'Cadastre-se',
           icone: Icons.app_registration,
@@ -32,7 +32,7 @@ class DrawerSecao extends StatelessWidget {
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context) => Cadastro()));
           },
-          destacado: false),
+        ),
       DrawerOpcoes(
           titulo: 'Entrar',
           icone: Icons.login,
@@ -40,7 +40,7 @@ class DrawerSecao extends StatelessWidget {
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context) => Login()));
           },
-          destacado: false),
+        ),
     ]);
   }
 }

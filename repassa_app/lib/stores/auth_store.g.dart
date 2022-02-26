@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'cadastro_store.dart';
+part of 'auth_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,51 +8,65 @@ part of 'cadastro_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$CadastroStore on _CadastroStore, Store {
+mixin _$AuthStore on _AuthStore, Store {
   Computed<bool>? _$nomeValidoComputed;
 
   @override
-  bool get nomeValido =>
-      (_$nomeValidoComputed ??= Computed<bool>(() => super.nomeValido,
-              name: '_CadastroStore.nomeValido'))
-          .value;
+  bool get nomeValido => (_$nomeValidoComputed ??=
+          Computed<bool>(() => super.nomeValido, name: '_AuthStore.nomeValido'))
+      .value;
   Computed<bool>? _$emailValidoComputed;
 
   @override
   bool get emailValido =>
       (_$emailValidoComputed ??= Computed<bool>(() => super.emailValido,
-              name: '_CadastroStore.emailValido'))
+              name: '_AuthStore.emailValido'))
           .value;
   Computed<bool>? _$senhaValidaComputed;
 
   @override
   bool get senhaValida =>
       (_$senhaValidaComputed ??= Computed<bool>(() => super.senhaValida,
-              name: '_CadastroStore.senhaValida'))
+              name: '_AuthStore.senhaValida'))
           .value;
   Computed<bool>? _$confirmarSenhaValidoComputed;
 
   @override
   bool get confirmarSenhaValido => (_$confirmarSenhaValidoComputed ??=
           Computed<bool>(() => super.confirmarSenhaValido,
-              name: '_CadastroStore.confirmarSenhaValido'))
+              name: '_AuthStore.confirmarSenhaValido'))
       .value;
   Computed<bool>? _$formularioValidoComputed;
 
   @override
   bool get formularioValido => (_$formularioValidoComputed ??= Computed<bool>(
           () => super.formularioValido,
-          name: '_CadastroStore.formularioValido'))
+          name: '_AuthStore.formularioValido'))
       .value;
-  Computed<Function?>? _$cadastrarPressionadoComputed;
+  Computed<Function?>? _$loginPressionadoComputed;
 
   @override
-  Function? get cadastrarPressionado => (_$cadastrarPressionadoComputed ??=
-          Computed<Function?>(() => super.cadastrarPressionado,
-              name: '_CadastroStore.cadastrarPressionado'))
+  Function? get loginPressionado => (_$loginPressionadoComputed ??=
+          Computed<Function?>(() => super.loginPressionado,
+              name: '_AuthStore.loginPressionado'))
       .value;
 
-  final _$nomeAtom = Atom(name: '_CadastroStore.nome');
+  final _$userAtom = Atom(name: '_AuthStore.user');
+
+  @override
+  User? get user {
+    _$userAtom.reportRead();
+    return super.user;
+  }
+
+  @override
+  set user(User? value) {
+    _$userAtom.reportWrite(value, super.user, () {
+      super.user = value;
+    });
+  }
+
+  final _$nomeAtom = Atom(name: '_AuthStore.nome');
 
   @override
   String? get nome {
@@ -67,7 +81,7 @@ mixin _$CadastroStore on _CadastroStore, Store {
     });
   }
 
-  final _$emailAtom = Atom(name: '_CadastroStore.email');
+  final _$emailAtom = Atom(name: '_AuthStore.email');
 
   @override
   String? get email {
@@ -82,7 +96,7 @@ mixin _$CadastroStore on _CadastroStore, Store {
     });
   }
 
-  final _$fotoAtom = Atom(name: '_CadastroStore.foto');
+  final _$fotoAtom = Atom(name: '_AuthStore.foto');
 
   @override
   String? get foto {
@@ -97,7 +111,7 @@ mixin _$CadastroStore on _CadastroStore, Store {
     });
   }
 
-  final _$senhaAtom = Atom(name: '_CadastroStore.senha');
+  final _$senhaAtom = Atom(name: '_AuthStore.senha');
 
   @override
   String? get senha {
@@ -112,7 +126,7 @@ mixin _$CadastroStore on _CadastroStore, Store {
     });
   }
 
-  final _$confirmarSenhaAtom = Atom(name: '_CadastroStore.confirmarSenha');
+  final _$confirmarSenhaAtom = Atom(name: '_AuthStore.confirmarSenha');
 
   @override
   String? get confirmarSenha {
@@ -127,7 +141,7 @@ mixin _$CadastroStore on _CadastroStore, Store {
     });
   }
 
-  final _$loadingAtom = Atom(name: '_CadastroStore.loading');
+  final _$loadingAtom = Atom(name: '_AuthStore.loading');
 
   @override
   bool get loading {
@@ -142,7 +156,7 @@ mixin _$CadastroStore on _CadastroStore, Store {
     });
   }
 
-  final _$erroAtom = Atom(name: '_CadastroStore.erro');
+  final _$erroAtom = Atom(name: '_AuthStore.erro');
 
   @override
   String? get erro {
@@ -157,7 +171,7 @@ mixin _$CadastroStore on _CadastroStore, Store {
     });
   }
 
-  final _$cadastroSalvoAtom = Atom(name: '_CadastroStore.cadastroSalvo');
+  final _$cadastroSalvoAtom = Atom(name: '_AuthStore.cadastroSalvo');
 
   @override
   bool? get cadastroSalvo {
@@ -172,63 +186,110 @@ mixin _$CadastroStore on _CadastroStore, Store {
     });
   }
 
-  final _$_cadastrarAsyncAction = AsyncAction('_CadastroStore._cadastrar');
+  final _$loginConcluidoAtom = Atom(name: '_AuthStore.loginConcluido');
 
   @override
-  Future<void> _cadastrar() {
-    return _$_cadastrarAsyncAction.run(() => super._cadastrar());
+  bool get loginConcluido {
+    _$loginConcluidoAtom.reportRead();
+    return super.loginConcluido;
   }
 
-  final _$_CadastroStoreActionController =
-      ActionController(name: '_CadastroStore');
+  @override
+  set loginConcluido(bool value) {
+    _$loginConcluidoAtom.reportWrite(value, super.loginConcluido, () {
+      super.loginConcluido = value;
+    });
+  }
+
+  final _$GetByIdUserAsyncAction = AsyncAction('_AuthStore.GetByIdUser');
+
+  @override
+  Future<dynamic> GetByIdUser(int id) {
+    return _$GetByIdUserAsyncAction.run(() => super.GetByIdUser(id));
+  }
+
+  final _$cadastrarAsyncAction = AsyncAction('_AuthStore.cadastrar');
+
+  @override
+  Future<void> cadastrar() {
+    return _$cadastrarAsyncAction.run(() => super.cadastrar());
+  }
+
+  final _$_loginAsyncAction = AsyncAction('_AuthStore._login');
+
+  @override
+  Future<void> _login() {
+    return _$_loginAsyncAction.run(() => super._login());
+  }
+
+  final _$atualizarAsyncAction = AsyncAction('_AuthStore.atualizar');
+
+  @override
+  Future<void> atualizar() {
+    return _$atualizarAsyncAction.run(() => super.atualizar());
+  }
+
+  final _$_AuthStoreActionController = ActionController(name: '_AuthStore');
 
   @override
   void setNome(String valor) {
-    final _$actionInfo = _$_CadastroStoreActionController.startAction(
-        name: '_CadastroStore.setNome');
+    final _$actionInfo =
+        _$_AuthStoreActionController.startAction(name: '_AuthStore.setNome');
     try {
       return super.setNome(valor);
     } finally {
-      _$_CadastroStoreActionController.endAction(_$actionInfo);
+      _$_AuthStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setEmail(String valor) {
-    final _$actionInfo = _$_CadastroStoreActionController.startAction(
-        name: '_CadastroStore.setEmail');
+    final _$actionInfo =
+        _$_AuthStoreActionController.startAction(name: '_AuthStore.setEmail');
     try {
       return super.setEmail(valor);
     } finally {
-      _$_CadastroStoreActionController.endAction(_$actionInfo);
+      _$_AuthStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setFoto(String valor) {
+    final _$actionInfo =
+        _$_AuthStoreActionController.startAction(name: '_AuthStore.setFoto');
+    try {
+      return super.setFoto(valor);
+    } finally {
+      _$_AuthStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setSenha(String valor) {
-    final _$actionInfo = _$_CadastroStoreActionController.startAction(
-        name: '_CadastroStore.setSenha');
+    final _$actionInfo =
+        _$_AuthStoreActionController.startAction(name: '_AuthStore.setSenha');
     try {
       return super.setSenha(valor);
     } finally {
-      _$_CadastroStoreActionController.endAction(_$actionInfo);
+      _$_AuthStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setConfirmarSenha(String valor) {
-    final _$actionInfo = _$_CadastroStoreActionController.startAction(
-        name: '_CadastroStore.setConfirmarSenha');
+    final _$actionInfo = _$_AuthStoreActionController.startAction(
+        name: '_AuthStore.setConfirmarSenha');
     try {
       return super.setConfirmarSenha(valor);
     } finally {
-      _$_CadastroStoreActionController.endAction(_$actionInfo);
+      _$_AuthStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   String toString() {
     return '''
+user: ${user},
 nome: ${nome},
 email: ${email},
 foto: ${foto},
@@ -237,12 +298,13 @@ confirmarSenha: ${confirmarSenha},
 loading: ${loading},
 erro: ${erro},
 cadastroSalvo: ${cadastroSalvo},
+loginConcluido: ${loginConcluido},
 nomeValido: ${nomeValido},
 emailValido: ${emailValido},
 senhaValida: ${senhaValida},
 confirmarSenhaValido: ${confirmarSenhaValido},
 formularioValido: ${formularioValido},
-cadastrarPressionado: ${cadastrarPressionado}
+loginPressionado: ${loginPressionado}
     ''';
   }
 }

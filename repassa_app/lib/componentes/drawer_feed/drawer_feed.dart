@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:repassa_app/componentes/drawer_customizado/drawer_secao.dart';
-class DrawerCustomizado extends StatelessWidget {
+import 'package:repassa_app/componentes/drawer_feed/drawer_secao.dart';
+import 'package:repassa_app/componentes/drawer_feed/drawer_cabecalho.dart';
+
+class DrawerFeed extends StatelessWidget {
+  const DrawerFeed({ Key? key }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -11,7 +15,8 @@ class DrawerCustomizado extends StatelessWidget {
           backgroundColor: Colors.white,
           child: ListView(
             children: [ 
-              Image.network('https://i.imgur.com/5KOEUob.png', height: 150),
+              Image.network('https://i.imgur.com/5KOEUob.png', height: 100),
+              DrawerCabecalho(),
               DrawerSecao()
             ]
             
